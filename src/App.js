@@ -4,6 +4,8 @@ import "./App.css";
 import { AppContextProvider } from "./modules/context";
 import { Layout } from "antd";
 import HeaderComponent from "./component/HeaderComponent";
+import HomeComponent from "./component/HomeComponent";
+
 const { Content } = Layout;
 
 function App() {
@@ -13,7 +15,11 @@ function App() {
         <HeaderComponent />
         <Layout>
           <Content>
-            <AppContextProvider>{/* <Routes></Routes> */}</AppContextProvider>
+            <AppContextProvider>
+              <Routes>
+                <Route path="/" element={<HomeComponent />} />
+              </Routes>
+            </AppContextProvider>
           </Content>
         </Layout>
       </Layout>

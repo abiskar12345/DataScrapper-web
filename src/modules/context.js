@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useState } from "react";
-import * as Service from "./Service";
+import * as Service from "./service";
 
 const initialState = {
   liveData: [],
@@ -20,13 +20,13 @@ export const AppContextProvider = ({ children }) => {
   };
 
   const getLiveData = useCallback(async (query) => {
-    const data = await Service.listTodos(query);
+    const data = await Service.getLiveData(query);
 
     setState((prev) => ({ ...prev, liveData: [...data] }));
   }, []);
 
   const addWatchList = (payload) => {
-    return Service.addTodo(payload);
+    return Service.addWatchList(payload);
   };
 
   return (
@@ -41,5 +41,3 @@ export const AppContextProvider = ({ children }) => {
     </AppContext.Provider>
   );
 };
-
-export { AppContext };
