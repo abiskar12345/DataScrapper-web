@@ -12,12 +12,10 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../modules/context";
-const { Title } = Typography;
-const { Header, Content } = Layout;
-const { Search } = Input;
+const { Content } = Layout;
 const ListComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { getLiveData, liveData, refresh, addWatchList } =
+  const { getLiveData, liveData, refresh, addWatchList, search } =
     useContext(AppContext);
   const [highPrice, setHighPrice] = useState("");
   const [lowPrice, setLowPrice] = useState("");
@@ -32,15 +30,21 @@ const ListComponent = () => {
 
   const handleAddToWatchlist = async (data) => {
     try {
-      await addWatchList({ lowPrice, highPrice, code });
+      let userId = localStorage.getItem("user");
+      await addWatchList({ lowPrice, highPrice, code: code, userId });
+      setIsModalOpen(false);
     } catch (error) {
       console.log(error);
+      window.alert(error);
     }
   };
+  console.log(search);
 
   useEffect(() => {
-    getLiveData({});
-  }, [getLiveData, refresh]);
+    let query = {};
+    if (search) query = { search };
+    getLiveData(query);
+  }, [getLiveData, refresh, search]);
 
   return (
     <Layout>
@@ -56,23 +60,23 @@ const ListComponent = () => {
             >
               <div>
                 <label>High Price:</label>
-                <Search
+                <Input
                   placeholder="Enter high price"
                   allowClear
-                  enterButton="Submit"
                   size="large"
+                  type="number"
                   value={highPrice}
                   onChange={(e) => setHighPrice(e.target.value)}
                 />
               </div>
               <div>
                 <label>Low Price:</label>
-                <Search
+                <Input
                   placeholder="Enter low price"
                   allowClear
-                  enterButton="Submit"
                   size="large"
                   value={lowPrice}
+                  type="number"
                   onChange={(e) => setLowPrice(e.target.value)}
                 />
               </div>
@@ -97,21 +101,21 @@ const ListComponent = () => {
                         <span
                           style={{ marginLeft: "8px", alignItems: "start" }}
                         >
-                          {data.cryptoCurrency.name}
+                          {data?.cryptoCurrency.name}
                         </span>
                         <span
                           style={{ marginLeft: "8px", alignItems: "flex-end" }}
                         >
-                          price: $ {data.marketCap}
+                          price: $ {data?.marketCap}
                         </span>
                       </div>
                     }
                     description={
                       <div>
-                        <div>{data.cryptoCurrency.code}</div>
+                        <div>{data?.cryptoCurrency.code}</div>
                         <div style={{ marginTop: "8px" }}>
-                          <Tag color={data.dayData > "done" ? "green" : "red"}>
-                            {data.dayData}
+                          <Tag color={data?.dayData > "done" ? "green" : "red"}>
+                            {data?.dayData}
                           </Tag>
                         </div>
                       </div>
@@ -120,7 +124,7 @@ const ListComponent = () => {
                   <List.Item
                     actions={[
                       <Button
-                        onClick={() => showModal(data.cryptoCurrency.code)}
+                        onClick={() => showModal(data?.cryptoCurrency.code)}
                       >
                         Add To watchList
                       </Button>,

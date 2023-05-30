@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 import { Input } from "antd";
+import { AppContext } from "../modules/context";
 
 const { Header } = Layout;
 const { Search } = Input;
 
 const navbar = [
   { label: "Cryptos", link: "/" },
-  { label: "Watchlist", link: "/watchlist" },
+  { label: "Notification", link: "/notifications" },
 ];
 
 const HeaderComponent = () => {
-  const onSearch = () => {
-    // Functionality for handling search
+  const { setSearch } = useContext(AppContext);
+  const onSearch = async (data) => {
+    setSearch(data);
   };
 
   return (
