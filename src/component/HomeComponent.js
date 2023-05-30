@@ -38,7 +38,6 @@ const ListComponent = () => {
       window.alert(error);
     }
   };
-  console.log(search);
 
   useEffect(() => {
     let query = {};

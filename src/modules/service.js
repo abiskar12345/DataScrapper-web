@@ -32,6 +32,6 @@ export const getNotifications = (id) => {
     axios
       .get(`${API_BASE_URL}/api/v1/notifications/user/${id}`, {})
       .then((res) => resolve(res?.data?.data))
-      .catch((err) => reject(err?.response?.data));
+      .catch((err) => reject(err));
   });
 };
