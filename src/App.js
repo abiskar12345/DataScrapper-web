@@ -23,11 +23,11 @@ const ProtectedRoute = ({ element, path }) => {
 function App() {
   return (
     <Router basename="/">
-      <Layout>
-        <HeaderComponent />
+      <AppContextProvider>
         <Layout>
-          <Content>
-            <AppContextProvider>
+          <HeaderComponent />
+          <Layout>
+            <Content>
               <Routes>
                 <Route
                   path="/"
@@ -41,10 +41,10 @@ function App() {
                 />
                 <Route path="/login" element={<LoginComponent />} />
               </Routes>
-            </AppContextProvider>
-          </Content>
+            </Content>
+          </Layout>
         </Layout>
-      </Layout>
+      </AppContextProvider>
     </Router>
   );
 }

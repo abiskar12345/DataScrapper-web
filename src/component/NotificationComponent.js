@@ -4,7 +4,7 @@ import { AppContext } from "../modules/context";
 const { Content } = Layout;
 const NotificationComponent = () => {
   const { notifications, getNotifications, refresh } = useContext(AppContext);
-
+  console.log(notifications);
   useEffect(() => {
     const id = localStorage.getItem("user");
     if (!id) return;

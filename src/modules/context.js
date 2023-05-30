@@ -26,6 +26,7 @@ export const AppContextProvider = ({ children }) => {
   };
 
   const setSearch = (string) => {
+    console.log(string);
     setState((prev) => ({ ...prev, search: string }));
   };
 
